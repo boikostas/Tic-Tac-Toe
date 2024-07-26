@@ -7,15 +7,19 @@
 
 import SwiftUI
 
-struct FirstScreen_: View {
+struct FirstScreen: View {
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color.gradientLight, Color.gradientDark], startPoint: .top, endPoint: .bottom)
-            
+            backgroundGradient
             titleWithBackground
+            playButtonsGroup
         }
         .ignoresSafeArea()
         
+    }
+    
+    private var backgroundGradient: some View {
+        LinearGradient(colors: [Color.gradientLight, Color.gradientDark], startPoint: .top, endPoint: .bottom)
     }
     
     private var titleWithBackground: some View {
@@ -43,12 +47,37 @@ struct FirstScreen_: View {
                     .fontWeight(.heavy)
 
             }
+            .foregroundStyle(.black)
             
             Spacer()
         }
     }
+    
+    private var playButtonsGroup: some View {
+        VStack(spacing: 10) {
+            Spacer()
+            Text("Choose who you wanna play against")
+                .fontWeight(.light)
+                .font(.system(size: 18))
+                .frame(alignment: .center)
+                .foregroundStyle(.white)
+            
+            Image(systemName: "arrow.triangle.branch")
+                .fontWeight(.light)
+                .rotationEffect(.degrees(180))
+                .foregroundStyle(.white)
+                .font(.system(size: 18))
+            
+            HStack(spacing: 25) {
+                PlayButton(gameType: .pvp, size: 150)
+                PlayButton(gameType: .pve, size: 150)
+            }
+            .padding(.horizontal, 40)
+        }
+        .padding(.bottom, 40)
+    }
 }
 
 #Preview {
-    FirstScreen_()
+    FirstScreen()
 }
