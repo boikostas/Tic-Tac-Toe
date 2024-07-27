@@ -31,14 +31,12 @@ struct GameScreen: View {
            GridItem(.fixed(100), spacing: 5)
        ]
     
-    @State private var boardCells: [SignType] = [.none, .none, .none,
-                                                 .none, .none, .none,
-                                                 .none, .none, .none]
-    
-    private let boardCellTag = Array(0..<9)
+    @State private var boardCells: [[SignType]] = [[.none, .none, .none],
+                                                 [.none, .none, .none],
+                                                 [.none, .none, .none]]
     
     @State private var currentPlayerSing: SignType? = nil
-    var gameType: GameType = .pve
+    var gameType: GameType = .pvp
     
     @State private var turnLabel = "Your turn"
     
@@ -67,20 +65,27 @@ struct GameScreen: View {
             boardGrid
             
             LazyVGrid(columns: fixedColumn, spacing: 10) {
-                ForEach(boardCellTag, id: \.self) { index in
+                ForEach(0..<9) { index in
+                    let i = index / 3, j = index % 3
                     ZStack {
                         Rectangle().opacity(0.0001)
-                        boardCells[index].signImage
-                            .opacity(boardCells[index] == .none ? 0 : 1)
-                            .foregroundStyle(boardCells[index] == .x ? .signRed : .signGreen)
+                        boardCells[i][j].signImage
+                            .opacity(boardCells[i][j] == .none ? 0 : 1)
+                            .foregroundStyle(boardCells[i][j] == .x ? .signRed : .signGreen)
                             .fontWeight(.heavy)
-                            .font(.system(size: boardCells[index] == .x ? 80 : 100))
+                            .font(.system(size: boardCells[i][j] == .x ? 80 : 100))
                     }
                     .frame(width: 90, height: 90)
                     .onTapGesture {
-                        if boardCells[index] == .none {
+                        if boardCells[i][j] == .none {
                             if let currentPlayerSing {
-                                boardCells[index] = currentPlayerSing
+                                boardCells[i][j] = currentPlayerSing
+                            }
+                        }
+                        if let sign = currentPlayerSing {
+                            if isWin(with: sign) {
+                                turnLabel = (sign == .x) ? "Player 1 wins!" : "Player 2 wins!"
+                                return
                             }
                         }
                         nextTurn()
@@ -125,7 +130,6 @@ struct GameScreen: View {
     }
     
     private func nextTurn() {
-        
         switch gameType {
         case .pvp:
             currentPlayerSing == .x ? (currentPlayerSing = .o) : (currentPlayerSing = .x)
@@ -134,6 +138,25 @@ struct GameScreen: View {
             currentPlayerSing == .x ? (currentPlayerSing = .o) : (currentPlayerSing = .x)
             currentPlayerSing == .x ? (turnLabel = "YOUR TURN") : (turnLabel = "🤖's TURN")
         }
+    }
+    
+    private func isWin(with sign: SignType) -> Bool {
+        for i in 0..<boardCells.count {
+            var hCount = 0, vCount = 0
+            for j in 0..<boardCells[i].count {
+                if boardCells[i][j] == sign {
+                    hCount += 1
+                }
+                if boardCells[j][i] == sign {
+                    vCount += 1
+                }
+            }
+            
+            if vCount == 3 || hCount == 3 {
+                return true
+            }
+        }
+        return false
     }
 }
 
