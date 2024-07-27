@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct Tic_Tac_ToeApp: App {
+    
+    @State private var path = NavigationPath()
+    
     var body: some Scene {
         WindowGroup {
-            GameScreen()
+            NavigationStack(path: $path) {
+                FirstScreen(path: $path)
+            }
         }
     }
 }

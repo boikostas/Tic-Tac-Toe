@@ -7,23 +7,9 @@
 
 import SwiftUI
 
-enum SignType {
-    
-    case none, x, o
-    
-    var signImage: Image {
-        switch self {
-        case .none:
-            Image(systemName: "x.square")
-        case .x:
-            Image(systemName: "xmark")
-        case .o:
-            Image(systemName: "circlebadge")
-        }
-    }
-}
-
 struct GameScreen: View {
+    
+    @Binding var path: NavigationPath
     
     private let fixedColumn = [
         GridItem(.fixed(100), spacing: 5),
@@ -48,6 +34,13 @@ struct GameScreen: View {
             VStack {
                 titleLabel
                 gameBoard
+                
+                Button("Go home") {
+                    path = NavigationPath()
+                }
+                .font(.caption)
+                .foregroundStyle(.white)
+                .font(.system(size: 22))
             }
         }
         .ignoresSafeArea()
@@ -234,6 +227,15 @@ struct GameScreen: View {
     }
 }
 
+struct GameScreenPreview: View {
+    
+    @State var path = NavigationPath()
+    
+    var body: some View {
+        GameScreen(path: $path)
+    }
+}
+
 #Preview {
-    GameScreen()
+    GameScreenPreview()
 }
