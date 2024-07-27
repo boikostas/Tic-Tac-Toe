@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		293C075E2C542A5600103CCC /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293C075D2C542A5600103CCC /* GameScreen.swift */; };
+		293C07602C542A8300103CCC /* BackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293C075F2C542A8300103CCC /* BackgroundGradient.swift */; };
 		296D761D2C518E7B00177C52 /* Tic_Tac_ToeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D761C2C518E7B00177C52 /* Tic_Tac_ToeApp.swift */; };
-		296D761F2C518E7B00177C52 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D761E2C518E7B00177C52 /* ContentView.swift */; };
 		296D76212C518E7C00177C52 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 296D76202C518E7C00177C52 /* Assets.xcassets */; };
 		296D76242C518E7C00177C52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 296D76232C518E7C00177C52 /* Preview Assets.xcassets */; };
 		296D762B2C5190CC00177C52 /* FirstScreen .swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D762A2C5190CC00177C52 /* FirstScreen .swift */; };
@@ -17,9 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		293C075D2C542A5600103CCC /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
+		293C075F2C542A8300103CCC /* BackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundGradient.swift; sourceTree = "<group>"; };
 		296D76192C518E7B00177C52 /* Tic-Tac-Toe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tic-Tac-Toe.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		296D761C2C518E7B00177C52 /* Tic_Tac_ToeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tic_Tac_ToeApp.swift; sourceTree = "<group>"; };
-		296D761E2C518E7B00177C52 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		296D76202C518E7C00177C52 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		296D76232C518E7C00177C52 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		296D762A2C5190CC00177C52 /* FirstScreen .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirstScreen .swift"; sourceTree = "<group>"; };
@@ -38,6 +40,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		293C075C2C542A3F00103CCC /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				296D762A2C5190CC00177C52 /* FirstScreen .swift */,
+				293C075D2C542A5600103CCC /* GameScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		296D76102C518E7B00177C52 = {
 			isa = PBXGroup;
 			children = (
@@ -57,11 +68,10 @@
 		296D761B2C518E7B00177C52 /* Tic-Tac-Toe */ = {
 			isa = PBXGroup;
 			children = (
+				293C075C2C542A3F00103CCC /* Screens */,
 				296D762F2C53B84F00177C52 /* Models */,
 				296D762C2C53B59700177C52 /* Components */,
 				296D761C2C518E7B00177C52 /* Tic_Tac_ToeApp.swift */,
-				296D761E2C518E7B00177C52 /* ContentView.swift */,
-				296D762A2C5190CC00177C52 /* FirstScreen .swift */,
 				296D76202C518E7C00177C52 /* Assets.xcassets */,
 				296D76222C518E7C00177C52 /* Preview Content */,
 			);
@@ -80,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				296D762D2C53B5AB00177C52 /* PlayButton.swift */,
+				293C075F2C542A8300103CCC /* BackgroundGradient.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -162,11 +173,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				296D761F2C518E7B00177C52 /* ContentView.swift in Sources */,
 				296D762E2C53B5AB00177C52 /* PlayButton.swift in Sources */,
+				293C075E2C542A5600103CCC /* GameScreen.swift in Sources */,
 				296D761D2C518E7B00177C52 /* Tic_Tac_ToeApp.swift in Sources */,
 				296D76312C53B85A00177C52 /* GameType.swift in Sources */,
 				296D762B2C5190CC00177C52 /* FirstScreen .swift in Sources */,
+				293C07602C542A8300103CCC /* BackgroundGradient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

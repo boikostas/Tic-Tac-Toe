@@ -19,7 +19,7 @@ struct FirstScreen: View {
     }
     
     private var backgroundGradient: some View {
-        LinearGradient(colors: [Color.gradientLight, Color.gradientDark], startPoint: .top, endPoint: .bottom)
+        BackgroundGradient()
     }
     
     private var titleWithBackground: some View {
