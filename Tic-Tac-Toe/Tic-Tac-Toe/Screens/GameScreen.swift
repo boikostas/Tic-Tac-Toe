@@ -43,7 +43,40 @@ struct GameScreen: View {
     var body: some View {
         ZStack {
             BackgroundGradient()
+            gameBoard
             
+        }
+        .ignoresSafeArea()
+    }
+    
+    private var gameBoard: some View {
+        ZStack {
+            boardGrid
+            
+            LazyVGrid(columns: fixedColumn, spacing: 10) {
+                ForEach(boardCellTag, id: \.self) { index in
+                    ZStack {
+                        Rectangle().opacity(0.0001)
+                        boardCells[index].signImage
+                            .opacity(boardCells[index] == .none ? 0 : 1)
+                            .foregroundStyle(boardCells[index] == .x ? .signRed : .signGreen)
+                            .fontWeight(.heavy)
+                            .font(.system(size: boardCells[index] == .x ? 80 : 100))
+                    }
+                    .frame(width: 90, height: 90)
+                    .onTapGesture {
+                        if boardCells[index] == .none {
+                            boardCells[index] = currentPlayerSing
+                        }
+                        nextTurn()
+                    }
+                }
+            }
+        }
+    }
+    
+    private var boardGrid: some View {
+        ZStack {
             RoundedRectangle(cornerRadius: 20).fill(.white)
                 .frame(width: 350,height: 350)
             
@@ -62,28 +95,7 @@ struct GameScreen: View {
                 }
                 .frame(width: 300, height: 2)
             }
-             
-            LazyVGrid(columns: fixedColumn, spacing: 10) {
-                ForEach(boardCellTag, id: \.self) { index in
-                    ZStack {
-                        Rectangle().opacity(0.0001)
-                        boardCells[index].signImage
-                            .opacity(boardCells[index] == .none ? 0 : 1)
-                            .foregroundStyle(boardCells[index] == .x ? .signRed : .signGreen)
-                            .fontWeight(.heavy)
-                            .font(.system(size: boardCells[index] == .x ? 80 : 100))
-                    }
-                        .frame(width: 90, height: 90)
-                        .onTapGesture {
-                            if boardCells[index] == .none {
-                                boardCells[index] = currentPlayerSing
-                            }
-                            nextTurn()
-                        }
-                }
-            }
         }
-        .ignoresSafeArea()
     }
     
     private func nextTurn() {
