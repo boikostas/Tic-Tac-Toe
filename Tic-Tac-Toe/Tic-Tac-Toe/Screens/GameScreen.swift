@@ -32,21 +32,34 @@ struct GameScreen: View {
        ]
     
     @State private var boardCells: [SignType] = [.none, .none, .none,
-                                           .none, .none, .none,
-                                           .none, .none, .none]
+                                                 .none, .none, .none,
+                                                 .none, .none, .none]
     
     private let boardCellTag = Array(0..<9)
     
-    @State private var currentPlayerSing: SignType = .x
-    var gameType: GameType = .pvp
+    @State private var currentPlayerSing: SignType? = nil
+    var gameType: GameType = .pve
+    
+    @State private var turnLabel = "Your turn"
     
     var body: some View {
         ZStack {
             BackgroundGradient()
-            gameBoard
+            VStack {
+                
+                Text(turnLabel)
+                    .foregroundStyle(.white)
+                    .fontWeight(.heavy)
+                    .font(.system(size: 32))
+                    .padding(.bottom, 50)
+                gameBoard
+            }
             
         }
         .ignoresSafeArea()
+        .onAppear {
+            startGame()
+        }
     }
     
     private var gameBoard: some View {
@@ -66,7 +79,9 @@ struct GameScreen: View {
                     .frame(width: 90, height: 90)
                     .onTapGesture {
                         if boardCells[index] == .none {
-                            boardCells[index] = currentPlayerSing
+                            if let currentPlayerSing {
+                                boardCells[index] = currentPlayerSing
+                            }
                         }
                         nextTurn()
                     }
@@ -98,9 +113,26 @@ struct GameScreen: View {
         }
     }
     
+    private func startGame() {
+        switch gameType {
+        case .pvp:
+            currentPlayerSing = .x
+            turnLabel = "PLAYER 1's TURN"
+        case .pve:
+            currentPlayerSing = .x
+            turnLabel = "YOUR TURN"
+        }
+    }
+    
     private func nextTurn() {
-        if gameType == .pvp {
+        
+        switch gameType {
+        case .pvp:
             currentPlayerSing == .x ? (currentPlayerSing = .o) : (currentPlayerSing = .x)
+            currentPlayerSing == .x ? (turnLabel = "PLAYER 1's TURN") : (turnLabel = "PLAYER 2's TURN")
+        case .pve:
+            currentPlayerSing == .x ? (currentPlayerSing = .o) : (currentPlayerSing = .x)
+            currentPlayerSing == .x ? (turnLabel = "YOUR TURN") : (turnLabel = "🤖's TURN")
         }
     }
 }
