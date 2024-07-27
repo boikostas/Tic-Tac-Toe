@@ -7,17 +7,14 @@
 
 import SwiftUI
 
-enum SignType: Identifiable {
-    var id: String {
-        UUID().uuidString
-    }
+enum SignType {
     
     case none, x, o
     
     var signImage: Image {
         switch self {
         case .none:
-            Image(systemName: "house")
+            Image(systemName: "x.square")
         case .x:
             Image(systemName: "xmark")
         case .o:
@@ -34,7 +31,14 @@ struct GameScreen: View {
            GridItem(.fixed(100), spacing: 5)
        ]
     
-    @State private var data: [SignType] = Array(repeating: .none, count: 9)
+    @State private var boardCells: [SignType] = [.none, .none, .none,
+                                           .none, .none, .none,
+                                           .none, .none, .none]
+    
+    private let boardCellTag = Array(0..<9)
+    
+    @State private var currentPlayerSing: SignType = .x
+    var gameType: GameType = .pvp
     
     var body: some View {
         ZStack {
@@ -58,28 +62,34 @@ struct GameScreen: View {
                 }
                 .frame(width: 300, height: 2)
             }
-            
+             
             LazyVGrid(columns: fixedColumn, spacing: 10) {
-                ForEach(data) { item in
-                    item.signImage
+                ForEach(boardCellTag, id: \.self) { index in
+                    ZStack {
+                        Rectangle().opacity(0.0001)
+                        boardCells[index].signImage
+                            .opacity(boardCells[index] == .none ? 0 : 1)
+                            .foregroundStyle(boardCells[index] == .x ? .signRed : .signGreen)
+                            .fontWeight(.heavy)
+                            .font(.system(size: boardCells[index] == .x ? 80 : 100))
+                    }
                         .frame(width: 90, height: 90)
                         .onTapGesture {
-                            for item in data {
-                                print(item.id)
+                            if boardCells[index] == .none {
+                                boardCells[index] = currentPlayerSing
                             }
-//                            if item == .none {
-//                                for index in 0..<data.count {
-//                                    print("endex" + data[index].id)
-//                                    if data[index].id == item.id {
-//                                        data[index] = .x  
-//                                    }
-//                                }
-//                            }
+                            nextTurn()
                         }
                 }
             }
         }
         .ignoresSafeArea()
+    }
+    
+    private func nextTurn() {
+        if gameType == .pvp {
+            currentPlayerSing == .x ? (currentPlayerSing = .o) : (currentPlayerSing = .x)
+        }
     }
 }
 
