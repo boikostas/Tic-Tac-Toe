@@ -8,6 +8,15 @@
 import SwiftUI
 
 struct FirstScreen: View {
+    
+    private var gameTypes: [GameType] = [.pvp, .pve]
+    
+    @Binding var path: NavigationPath
+    
+    init(path: Binding<NavigationPath>) {
+        _path = path
+    }
+    
     var body: some View {
         ZStack {
             backgroundGradient
@@ -69,15 +78,32 @@ struct FirstScreen: View {
                 .font(.system(size: 18))
             
             HStack(spacing: 25) {
-                PlayButton(gameType: .pvp, size: 150)
-                PlayButton(gameType: .pve, size: 150)
+                ForEach(gameTypes, id: \.self) { type in
+                    NavigationLink(value: type) {
+                        PlayButton(gameType: type, size: 150)
+                    }
+                }
             }
             .padding(.horizontal, 40)
+            .navigationDestination(for: GameType.self) { type in
+                GameScreen(path: $path, gameType: type)
+            }
         }
         .padding(.bottom, 40)
     }
 }
 
+struct FirstScreenPreview: View {
+    
+    @State var path = NavigationPath()
+    
+    var body: some View {
+        FirstScreen(path: $path)
+    }
+}
+
 #Preview {
-    FirstScreen()
+    NavigationStack {
+        FirstScreenPreview()
+    }
 }
